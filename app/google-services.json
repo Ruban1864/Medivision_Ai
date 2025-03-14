@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "855847626356",
+    "project_id": "meditracker-4f526",
+    "storage_bucket": "meditracker-4f526.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855847626356:android:7d1f1c511b8d35067dd321",
+        "android_client_info": {
+          "package_name": "com.example.meditracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEMX6MMw4QKgvx6dhrCuO1HAA5NwDOgAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

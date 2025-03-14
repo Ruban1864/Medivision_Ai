@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Medicine Name -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medicine Name"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/et_medicine_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e.g., Paracetamol"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Dosage -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dosage"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/et_dosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e.g., 500mg"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Quantity -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <EditText
+            android:id="@+id/et_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e.g., 30"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Time of Intake -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time of Intake"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <Button
+            android:id="@+id/btn_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Time"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Start Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <Button
+            android:id="@+id/btn_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Start Date"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- End Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <Button
+            android:id="@+id/btn_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select End Date"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Dosage Frequency -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dosage Frequency"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"/>
+        <Spinner
+            android:id="@+id/sp_frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Save Changes Button -->
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Changes"
+            android:backgroundTint="#4CAF50"
+        android:layout_marginBottom="8dp"/>
+
+        <!-- Delete Medicine Button -->
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Medicine"
+            android:backgroundTint="#F44336"
+        android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</ScrollView>
