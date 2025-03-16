@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="frequency_options">
-        <item>Every day</item>
-        <item>Alternate days</item>
-        <item>Every 8 hours</item>
-        <item>Every 12 hours</item>
-        <item>Once a week</item>
-    </string-array>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <itemnthly</item>
 </resources>
