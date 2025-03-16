@@ -1,7 +1,12 @@
 package com.example.meditracker;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,7 +29,7 @@ public class AddMedicineActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private EditText etMedicineName, etDosage, etQuantity;
-    private Button btnTime, btnStartDate, btnEndDate, btnSave, btnBack; // Added btnBack
+    private Button btnTime, btnStartDate, btnEndDate, btnSave, btnBack;
     private Spinner spFrequency;
     private String selectedTime = "", startDate = "", endDate = "";
 
@@ -52,7 +57,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         btnEndDate = findViewById(R.id.btn_end_date);
         spFrequency = findViewById(R.id.sp_frequency);
         btnSave = findViewById(R.id.btn_save);
-        btnBack = findViewById(R.id.btn_back); // Initialize on-screen back button
+        btnBack = findViewById(R.id.btn_back);
 
         // Setup Dosage Frequency Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -75,7 +80,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         // On-screen Back Button
         btnBack.setOnClickListener(v -> {
             Log.d(TAG, "On-screen back button clicked");
-            finish(); // Return to previous activity
+            finish();
         });
     }
 
@@ -151,13 +156,15 @@ public class AddMedicineActivity extends AppCompatActivity {
             return;
         }
 
-        // Save to Firestore
+        // Save to Firestore and set alarm
         db.collection("users").document(userId).collection("medicines")
                 .add(medicine)
                 .addOnSuccessListener(documentReference -> {
+                    String medicineId = documentReference.getId();
+                    setAlarm(medicineId, schedule, medicineName);
                     Toast.makeText(this, "Medicine added successfully", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Medicine added with ID: " + documentReference.getId());
-                    setResult(RESULT_OK); // Set result to indicate success
+                    setResult(RESULT_OK);
                     finish();
                 })
                 .addOnFailureListener(e -> {
@@ -166,12 +173,46 @@ public class AddMedicineActivity extends AppCompatActivity {
                 });
     }
 
+    @SuppressLint("ScheduleExactAlarm")
+    private void setAlarm(String medicineId, String schedule, String medicineName) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("medicineId", medicineId);
+        intent.putExtra("medicineName", medicineName);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, medicineId.hashCode(), intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sdf.parse(schedule));
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            // Set alarm 1 hour before the scheduled time
+            Calendar alarmTime = (Calendar) calendar.clone();
+            alarmTime.add(Calendar.HOUR_OF_DAY, -1);
+
+            // If alarm time is in the past, schedule for the next day (for daily frequency)
+            if (alarmTime.before(Calendar.getInstance()) && spFrequency.getSelectedItem().toString().equals("Daily")) {
+                alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+            }
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+            Log.d(TAG, "Alarm set for: " + sdf.format(alarmTime.getTime()));
+        } catch (Exception e) {
+            Toast.makeText(this, "Error setting alarm: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Alarm setting error", e);
+        }
+    }
+
     // Handle ActionBar back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Log.d(TAG, "ActionBar back button clicked");
-            finish(); // Return to previous activity
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -181,7 +222,7 @@ public class AddMedicineActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.d(TAG, "Device back button pressed");
-        finish(); // Return to previous activity
-        super.onBackPressed(); // Optional, can be removed if finish() is sufficient
+        finish();
+        super.onBackPressed();
     }
 }

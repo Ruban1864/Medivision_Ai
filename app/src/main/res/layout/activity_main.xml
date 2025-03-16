@@ -1,102 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#E8F5E9"> <!-- Light green background -->
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E8F5E9">
 
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome, User"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Expiry Alerts -->
+    <TextView
+        android:id="@+id/tv_expiry_alerts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No upcoming expiries."
+        android:textSize="16sp"
+        android:textColor="#757575"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:background="#FFFFFF"
+        android:gravity="center"/>
+
+    <!-- Label for Medicine Reminders (Optional) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medicine Reminders"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- RecyclerView for Medicine Reminders -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_medicine_reminders"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Button Layout (Horizontal) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
-        <!-- Main Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MediTracker"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"/>
-
-        <!-- Welcome Text -->
-        <TextView
-            android:id="@+id/tv_welcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Expiry Alerts -->
-        <TextView
-            android:id="@+id/tv_expiry_alerts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Today's Medicine Reminders Title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Today's Medicine Reminders"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="4dp"/>
-
-        <!-- RecyclerView for Medicine Reminders -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_medicine_reminders"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Add Medicine Button -->
         <Button
             android:id="@+id/btn_add_medicine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
             android:text="Add Medicine"
-            android:backgroundTint="#4CAF50"
+            android:background="#4CAF50"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginEnd="8dp"/>
 
-        <!-- Edit Medicine Button -->
         <Button
             android:id="@+id/btn_edit_medicine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
             android:text="Edit Medicine"
-            android:backgroundTint="#4CAF50"
+            android:background="#2196F3"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Settings Button -->
-        <Button
-            android:id="@+id/btn_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:backgroundTint="#4CAF50"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Logout Button -->
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:backgroundTint="#F44336"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- Additional Buttons (Horizontal) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Settings"
+            android:background="#B0BEC5"
+            android:textColor="#212121"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Logout"
+            android:background="#F44336"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+</LinearLayout>

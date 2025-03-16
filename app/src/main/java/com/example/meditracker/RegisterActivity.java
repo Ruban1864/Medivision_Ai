@@ -2,6 +2,8 @@ package com.example.meditracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +37,28 @@ public class RegisterActivity extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.et_phone_number);
         Button btnRegister = findViewById(R.id.btn_register);
         TextView tvLogin = findViewById(R.id.tv_login);
+
+        // Set up password visibility toggle for et_password
+        etPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+                    togglePasswordVisibility(etPassword);
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // Set up password visibility toggle for et_confirm_password
+        etConfirmPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (etConfirmPassword.getRight() - etConfirmPassword.getCompoundDrawables()[2].getBounds().width())) {
+                    togglePasswordVisibility(etConfirmPassword);
+                    return true;
+                }
+            }
+            return false;
+        });
 
         // Register Button Click Listener
         btnRegister.setOnClickListener(v -> {
@@ -110,5 +134,27 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Login Link Click Listener
         tvLogin.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
+    }
+
+    private void togglePasswordVisibility(EditText editText) {
+        boolean isPasswordVisible = editText.getTransformationMethod() == null;
+        if (isPasswordVisible) {
+            editText.setTransformationMethod(new PasswordTransformationMethod());
+            editText.setCompoundDrawablesWithIntrinsicBounds(
+                    editText.getCompoundDrawables()[0], // Left
+                    null, // Top
+                    getResources().getDrawable(R.drawable.ic_eye_closed), // Right
+                    null // Bottom
+            );
+        } else {
+            editText.setTransformationMethod(null);
+            editText.setCompoundDrawablesWithIntrinsicBounds(
+                    editText.getCompoundDrawables()[0], // Left
+                    null, // Top
+                    getResources().getDrawable(R.drawable.ic_eye_open), // Right
+                    null // Bottom
+            );
+        }
+        editText.setSelection(editText.getText().length()); // Move cursor to end
     }
 }

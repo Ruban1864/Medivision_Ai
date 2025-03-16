@@ -1,7 +1,13 @@
 package com.example.meditracker;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,14 +32,29 @@ public class EditMedicineActivity extends AppCompatActivity {
     private EditText etMedicineName, etDosage, etQuantity;
     private Button btnTime, btnStartDate, btnEndDate, btnSave, btnDelete;
     private Spinner spFrequency;
-    private String selectedTime = "", startDate = "", endDate = "";
+    private String selectedTime = "";
+    private String startDate = "";
+    private String endDate = "";
     private String medicineId;
     private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_medicine); // Ensure this matches your XML file
+        Log.d(TAG, "onCreate started");
+
+        try {
+            setContentView(R.layout.activity_edit_medicine);
+            Log.d(TAG, "Layout set successfully");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to set content view: " + e.getMessage(), e);
+            if (e instanceof IllegalStateException && e.getMessage().contains("Theme.AppCompat")) {
+                Log.e(TAG, "Theme error: Ensure AndroidManifest.xml or styles.xml uses a Theme.AppCompat theme");
+            }
+            Toast.makeText(this, "Error loading UI: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         // Enable ActionBar back button
         if (getSupportActionBar() != null) {
@@ -42,59 +63,69 @@ public class EditMedicineActivity extends AppCompatActivity {
         }
 
         // Initialize Firebase
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
-        if (userId == null) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        try {
+            auth = FirebaseAuth.getInstance();
+            db = FirebaseFirestore.getInstance();
+            userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+            if (userId == null) {
+                Log.d(TAG, "No user logged in, redirecting to LoginActivity");
+                Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return;
+            }
+            Log.d(TAG, "Firebase initialized, userId: " + userId);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize Firebase: " + e.getMessage(), e);
+            Toast.makeText(this, "Firebase error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        // Initialize UI elements with logging for debugging
+        // Get medicine ID from Intent
+        medicineId = getIntent().getStringExtra("MEDICINE_ID");
+        if (medicineId == null) {
+            Log.e(TAG, "No medicine ID provided");
+            Toast.makeText(this, "No medicine selected", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // Initialize UI elements
         try {
             etMedicineName = findViewById(R.id.et_medicine_name);
-            if (etMedicineName == null) Log.e(TAG, "et_medicine_name not found");
             etDosage = findViewById(R.id.et_dosage);
-            if (etDosage == null) Log.e(TAG, "et_dosage not found");
             etQuantity = findViewById(R.id.et_quantity);
-            if (etQuantity == null) Log.e(TAG, "et_quantity not found");
             btnTime = findViewById(R.id.btn_time);
-            if (btnTime == null) Log.e(TAG, "btn_time not found");
             btnStartDate = findViewById(R.id.btn_start_date);
-            if (btnStartDate == null) Log.e(TAG, "btn_start_date not found");
             btnEndDate = findViewById(R.id.btn_end_date);
-            if (btnEndDate == null) Log.e(TAG, "btn_end_date not found");
             spFrequency = findViewById(R.id.sp_frequency);
-            if (spFrequency == null) Log.e(TAG, "sp_frequency not found");
             btnSave = findViewById(R.id.btn_save);
-            if (btnSave == null) Log.e(TAG, "btn_save not found");
             btnDelete = findViewById(R.id.btn_delete);
-            if (btnDelete == null) Log.e(TAG, "btn_delete not found");
 
-            // Check if any element is null
             if (etMedicineName == null || etDosage == null || etQuantity == null ||
                     btnTime == null || btnStartDate == null || btnEndDate == null ||
                     spFrequency == null || btnSave == null || btnDelete == null) {
                 throw new IllegalStateException("One or more UI elements not found in layout");
             }
+            Log.d(TAG, "UI elements initialized successfully");
         } catch (Exception e) {
-            Toast.makeText(this, "Error initializing UI: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e(TAG, "UI initialization error", e);
+            Log.e(TAG, "Failed to initialize UI: " + e.getMessage(), e);
+            Toast.makeText(this, "UI initialization error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         // Setup Dosage Frequency Spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.frequency_options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spFrequency.setAdapter(adapter);
-
-        // Get medicine ID from Intent
-        medicineId = getIntent().getStringExtra("MEDICINE_ID");
-        if (medicineId == null) {
-            Toast.makeText(this, "No medicine selected", Toast.LENGTH_SHORT).show();
+        try {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.frequency_options, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spFrequency.setAdapter(adapter);
+            Log.d(TAG, "Spinner initialized successfully");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize Spinner: " + e.getMessage(), e);
+            Toast.makeText(this, "Spinner error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -102,20 +133,14 @@ public class EditMedicineActivity extends AppCompatActivity {
         // Load existing medicine data
         loadMedicineData();
 
-        // Time Picker
+        // Set button listeners
         btnTime.setOnClickListener(v -> pickTime());
-
-        // Start Date Picker
         btnStartDate.setOnClickListener(v -> pickDate(true));
-
-        // End Date Picker
         btnEndDate.setOnClickListener(v -> pickDate(false));
-
-        // Save Button
         btnSave.setOnClickListener(v -> saveMedicineToFirestore());
-
-        // Delete Button
         btnDelete.setOnClickListener(v -> deleteMedicineFromFirestore());
+
+        Log.d(TAG, "onCreate completed successfully");
     }
 
     private void pickTime() {
@@ -133,7 +158,6 @@ public class EditMedicineActivity extends AppCompatActivity {
             Calendar selected = Calendar.getInstance();
             selected.set(year, month, dayOfMonth);
             String formattedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selected.getTime());
-
             if (isStartDate) {
                 startDate = formattedDate;
                 btnStartDate.setText("Start: " + startDate);
@@ -153,34 +177,36 @@ public class EditMedicineActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         etMedicineName.setText(documentSnapshot.getString("name"));
                         etDosage.setText(documentSnapshot.getString("dosage"));
-                        etQuantity.setText(String.valueOf(documentSnapshot.getLong("quantity")));
+                        Long quantity = documentSnapshot.getLong("quantity");
+                        etQuantity.setText(quantity != null ? String.valueOf(quantity) : "");
                         String schedule = documentSnapshot.getString("schedule");
                         if (schedule != null && schedule.contains(" ")) {
                             selectedTime = schedule.split(" ")[1];
                             btnTime.setText("Time: " + selectedTime);
                         }
                         startDate = documentSnapshot.getString("startDate");
-                        btnStartDate.setText("Start: " + startDate);
+                        btnStartDate.setText(startDate != null ? "Start: " + startDate : "Select Start Date");
                         endDate = documentSnapshot.getString("endDate");
-                        btnEndDate.setText("End: " + endDate);
+                        btnEndDate.setText(endDate != null ? "End: " + endDate : "Select End Date");
 
                         String frequency = documentSnapshot.getString("frequency");
                         if (frequency != null) {
-                            for (int i = 0; i < spFrequency.getCount(); i++) {
-                                if (spFrequency.getItemAtPosition(i).toString().equals(frequency)) {
-                                    spFrequency.setSelection(i);
-                                    break;
-                                }
+                            ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spFrequency.getAdapter();
+                            int position = adapter.getPosition(frequency);
+                            if (position >= 0) {
+                                spFrequency.setSelection(position);
                             }
                         }
+                        Log.d(TAG, "Medicine data loaded successfully");
                     } else {
+                        Log.w(TAG, "Medicine document not found");
                         Toast.makeText(this, "Medicine not found", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
                 .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to load medicine data: " + e.getMessage(), e);
                     Toast.makeText(this, "Error loading medicine: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Load error", e);
                     finish();
                 });
     }
@@ -188,10 +214,11 @@ public class EditMedicineActivity extends AppCompatActivity {
     private void saveMedicineToFirestore() {
         String medicineName = etMedicineName.getText().toString().trim();
         String dosage = etDosage.getText().toString().trim();
-        String quantity = etQuantity.getText().toString().trim();
-        String frequency = spFrequency.getSelectedItem().toString();
+        String quantityStr = etQuantity.getText().toString().trim();
+        String frequency = spFrequency.getSelectedItem() != null ? spFrequency.getSelectedItem().toString() : "";
 
-        if (medicineName.isEmpty() || dosage.isEmpty() || selectedTime.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || quantity.isEmpty()) {
+        if (medicineName.isEmpty() || dosage.isEmpty() || quantityStr.isEmpty() || selectedTime.isEmpty() ||
+                startDate.isEmpty() || endDate.isEmpty() || frequency.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Validation failed: One or more fields are empty");
             return;
@@ -199,15 +226,16 @@ public class EditMedicineActivity extends AppCompatActivity {
 
         int quantityValue;
         try {
-            quantityValue = Integer.parseInt(quantity);
+            quantityValue = Integer.parseInt(quantityStr);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid quantity format", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Quantity parsing error", e);
+            Log.e(TAG, "Quantity parsing error: " + e.getMessage(), e);
             return;
         }
 
         String schedule = startDate + " " + selectedTime;
 
+        // Use parameterized Map to avoid unchecked warning
         Map<String, Object> medicine = new HashMap<>();
         medicine.put("name", medicineName);
         medicine.put("dosage", dosage);
@@ -221,6 +249,7 @@ public class EditMedicineActivity extends AppCompatActivity {
         db.collection("users").document(userId).collection("medicines").document(medicineId)
                 .set(medicine)
                 .addOnSuccessListener(aVoid -> {
+                    updateAlarm(medicineId, schedule, medicineName, frequency);
                     Toast.makeText(this, "Medicine updated successfully", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Medicine updated: " + medicineId);
                     setResult(RESULT_OK);
@@ -228,11 +257,24 @@ public class EditMedicineActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error updating medicine: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Firestore update error", e);
+                    Log.e(TAG, "Firestore update error: " + e.getMessage(), e);
                 });
     }
 
     private void deleteMedicineFromFirestore() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("medicineId", medicineId);
+
+        // Use modern PendingIntent flags with API check
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT | (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, medicineId.hashCode(), intent, flags);
+
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+            Log.d(TAG, "Alarm cancelled for medicineId: " + medicineId);
+        }
+
         db.collection("users").document(userId).collection("medicines").document(medicineId)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
@@ -243,8 +285,66 @@ public class EditMedicineActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error deleting medicine: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Firestore delete error", e);
+                    Log.e(TAG, "Firestore delete error: " + e.getMessage(), e);
                 });
+    }
+
+    @SuppressLint("ScheduleExactAlarm")
+    private void updateAlarm(String medicineId, String schedule, String medicineName, String frequency) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager == null) {
+            Log.e(TAG, "AlarmManager not available");
+            Toast.makeText(this, "Cannot set alarm: Alarm service unavailable", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("medicineId", medicineId);
+        intent.putExtra("medicineName", medicineName);
+
+        // Use modern PendingIntent flags with API check
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT | (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, medicineId.hashCode(), intent, flags);
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sdf.parse(schedule));
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            // Set alarm 1 hour before the scheduled time
+            Calendar alarmTime = (Calendar) calendar.clone();
+            alarmTime.add(Calendar.HOUR_OF_DAY, -1);
+
+            // Adjust for past alarms based on frequency
+            Calendar now = Calendar.getInstance();
+            while (alarmTime.before(now)) {
+                if ("Daily".equals(frequency)) {
+                    alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+                } else if ("Weekly".equals(frequency)) {
+                    alarmTime.add(Calendar.WEEK_OF_YEAR, 1);
+                } else if ("Monthly".equals(frequency)) {
+                    alarmTime.add(Calendar.MONTH, 1);
+                } else {
+                    break; // One-time alarm, don’t reschedule if past
+                }
+            }
+
+            // Use modern AlarmManager API with compatibility
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+                Log.w(TAG, "Exact alarms not permitted; requesting permission");
+                Toast.makeText(this, "Please allow exact alarm permission", Toast.LENGTH_LONG).show();
+                Intent permissionIntent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(permissionIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+                Log.d(TAG, "Alarm updated for " + medicineName + " at " + sdf.format(alarmTime.getTime()));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating alarm: " + e.getMessage(), e);
+            Toast.makeText(this, "Error updating alarm: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

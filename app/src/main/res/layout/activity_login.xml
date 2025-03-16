@@ -4,79 +4,139 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="#E8F5E9">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-        <!-- Login Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/app_name"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="#212121"
-        android:layout_gravity="center"
-        android:layout_marginBottom="30dp"/>
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="40dp"/>
 
-        <!-- Email -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/label_email"
             android:textSize="16sp"
             android:textColor="#212121"
-        android:layout_marginBottom="4dp"/>
+            android:layout_gravity="start"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter email"
+            android:layout_height="48dp"
+            android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:backgroundTint="#B0BEC5"
-        android:layout_marginBottom="20dp"/>
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:drawablePadding="6dp"
+            android:background="@drawable/edit_text_background"
+            android:textColorHint="#212121"
+            android:textAlignment="textStart"
+            android:importantForAutofill="yes"
+            android:layout_marginBottom="20dp"/>
 
-        <!-- Password -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password"
+            android:text="@string/label_password"
             android:textSize="16sp"
             android:textColor="#212121"
-        android:layout_marginBottom="4dp"/>
+            android:layout_gravity="start"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter password"
+            android:layout_height="48dp"
+            android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:padding="12dp"
-            android:backgroundTint="#B0BEC5"
-        android:layout_marginBottom="20dp"/>
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawableEnd="@drawable/ic_eye_closed"
+            android:drawablePadding="6dp"
+            android:background="@drawable/edit_text_background"
+            android:textColorHint="#212121"
+            android:textAlignment="textStart"
+            android:importantForAutofill="yes"
+            android:layout_marginBottom="16dp"/>
 
-        <!-- Login Button -->
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textSize="14sp"
+            android:textColor="#0288D1"
+            android:layout_gravity="end"
+            android:layout_marginBottom="20dp"/>
+
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="20dp"/>
+            android:layout_height="48dp"
+            android:text="@string/button_login"
+            android:background="@drawable/button_green_background"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="16dp"/>
 
-        <!-- Register Link -->
-        <TextView
-            android:id="@+id/tv_register"
+        <!-- Horizontal LinearLayout for Google and GitHub buttons -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Register"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/btn_google_sign_in"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Sign in with Google"
+                android:background="@drawable/button_white_background"
+                android:drawableStart="@drawable/ic_google"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:textColor="#212121"/>
+
+            <Button
+                android:id="@+id/btn_github_sign_in"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/button_github_sign_in"
+                android:background="@drawable/button_white_background"
+                android:drawableStart="@drawable/ic_github"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:textColor="#212121"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_prompt"
             android:textSize="16sp"
             android:textColor="#0288D1"
-        android:textAlignment="center"
-        android:layout_marginTop="8dp"/>
-
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"/>
     </LinearLayout>
 </ScrollView>
