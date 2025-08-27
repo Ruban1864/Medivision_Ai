@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="green" />
-</resources>
+        <resources>
+            <!-- Brand Colors -->
+            <color name="colorPrimary">#2962FF</color> <!-- Vivid Indigo -->
+            <color name="colorPrimaryDark">#0D47A1</color> <!-- Deep Navy -->
+            <color name="colorSecondary">#00C853</color> <!-- Bright Emerald -->
+            <color name="colorAccent">#FF6D00</color> <!-- Vibrant Orange -->
+
+            <!-- Backgrounds -->
+            <color name="colorBackground">#F8FAFC</color> <!-- Light Grayish Blue -->
+            <color name="colorSurface">#FFFFFF</color> <!-- Pure White -->
+
+            <!-- Text -->
+            <color name="textPrimary">#1A1A1A</color> <!-- Strong Black -->
+            <color name="textSecondary">#5F6368</color> <!-- Muted Gray -->
+
+            <!-- States -->
+            <color name="colorDisabled">#B0BEC5</color> <!-- Soft Gray -->
+            <color name="colorError">#D50000</color> <!-- Strong Red -->
+        </resources>

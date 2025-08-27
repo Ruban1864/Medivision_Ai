@@ -12,6 +12,7 @@ googleGmsGoogleServices = "4.4.2"
 recyclerview = "1.4.0"
 firebaseFirestore = "25.1.2"
 play-services-auth = "21.1.1"
+firebaseStorage = "22.0.0"
 
 
 [libraries]
@@ -26,6 +27,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

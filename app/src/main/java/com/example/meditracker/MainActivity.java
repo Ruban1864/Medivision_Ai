@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private TextView tvWelcome, tvExpiryAlerts;
     private RecyclerView rvMedicineReminders;
-    private Button btnAddMedicine, btnEditMedicine, btnSettings, btnLogout;
+    private Button btnAddMedicine, btnEditMedicine, btnSettings, btnLogout,btnUploadReport;
     private MedicineAdapter medicineAdapter;
     private List<Medicine> medicineList;
 
@@ -79,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         // Initialize UI elements
         try {
             tvWelcome = findViewById(R.id.tv_welcome);
-            tvExpiryAlerts = findViewById(R.id.tv_expiry_alerts);
+            tvExpiryAlerts = findViewById(R.id.cv_expiry_alerts);
             rvMedicineReminders = findViewById(R.id.rv_medicine_reminders);
             btnAddMedicine = findViewById(R.id.btn_add_medicine);
             btnEditMedicine = findViewById(R.id.btn_edit_medicine);
             btnSettings = findViewById(R.id.btn_settings);
             btnLogout = findViewById(R.id.btn_logout);
-
+            btnUploadReport = findViewById(R.id.btn_upload_report);
             if (tvWelcome == null || tvExpiryAlerts == null || rvMedicineReminders == null ||
                     btnAddMedicine == null || btnEditMedicine == null || btnSettings == null || btnLogout == null) {
                 throw new NullPointerException("One or more UI elements not found");
@@ -137,12 +137,24 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Settings feature coming soon!", Toast.LENGTH_SHORT).show();
         });
 
+
         btnLogout.setOnClickListener(v -> {
             Log.d(TAG, "Logout button clicked");
             auth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+        });
+
+        btnUploadReport.setOnClickListener(v -> {
+            Log.d(TAG, "Upload Report button clicked");
+            try {
+                Intent intent = new Intent(MainActivity.this, UploadReportActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Error starting UploadReportActivity: " + e.getMessage(), e);
+                Toast.makeText(this, "Error navigating to upload: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         });
 
         Log.d(TAG, "onCreate completed successfully");
@@ -359,9 +371,9 @@ class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
             try {
-                tvMedicineName = itemView.findViewById(R.id.et_medicine_name);
-                tvStartDate = itemView.findViewById(R.id.btn_start_date);
-                tvEndDate = itemView.findViewById(R.id.btn_end_date);
+                tvMedicineName = itemView.findViewById(R.id.tv_medicine_name);
+                tvStartDate = itemView.findViewById(R.id.tv_start_date);
+                tvEndDate = itemView.findViewById(R.id.tv_end_date);
                 tvDueTime = itemView.findViewById(R.id.tv_due_time);
                 btnCompletionStatus = itemView.findViewById(R.id.btn_completion_status);
                 if (tvMedicineName == null || tvStartDate == null || tvEndDate == null || tvDueTime == null || btnCompletionStatus == null) {

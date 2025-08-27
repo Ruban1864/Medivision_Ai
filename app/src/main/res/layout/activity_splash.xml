@@ -4,22 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#E8F5E9">
+    android:background="@drawable/bg_gradient"
+    android:padding="@dimen/spacing_lg">
 
+    <!-- App Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MediTracker"
-        android:textSize="36sp"
+        android:text="MedVision AI"
+        android:textAppearance="@style/TextAppearance.App.Headline"
         android:textStyle="bold"
-        android:textColor="#000000" />
+        android:textColor="@android:color/white"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="6"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/spacing_sm" />
 
+    <!-- Subtitle -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Medicine Companion"
-        android:textSize="18sp"
-        android:textColor="#666666"
-        android:layout_marginTop="8dp" />
+        android:textAppearance="@style/TextAppearance.App.Body"
+        android:textColor="@color/colorSecondary"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_md" />
 
 </LinearLayout>

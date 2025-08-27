@@ -3,140 +3,122 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#E8F5E9">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="20dp"
         android:gravity="center_horizontal">
 
+        <!-- App Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="28sp"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="40dp"/>
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="40dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_email"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"/>
-
+        <!-- Email Field -->
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:drawableStart="@android:drawable/ic_dialog_email"
-            android:drawablePadding="6dp"
-            android:background="@drawable/edit_text_background"
-            android:textColorHint="#212121"
-            android:textAlignment="textStart"
-            android:importantForAutofill="yes"
-            android:layout_marginBottom="20dp"/>
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="14dp"
+            android:background="@drawable/edittext_background"
+            android:textColorHint="@color/textSecondary"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_password"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:layout_gravity="start"
-            android:layout_marginBottom="6dp"/>
-
+        <!-- Password Field -->
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:drawableStart="@android:drawable/ic_lock_idle_lock"
             android:drawableEnd="@drawable/ic_eye_closed"
-            android:drawablePadding="6dp"
-            android:background="@drawable/edit_text_background"
-            android:textColorHint="#212121"
-            android:textAlignment="textStart"
-            android:importantForAutofill="yes"
-            android:layout_marginBottom="16dp"/>
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="14dp"
+            android:background="@drawable/edittext_background"
+            android:textColorHint="@color/textSecondary"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="10dp" />
 
+        <!-- Forgot Password -->
         <TextView
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgot_password"
             android:textSize="14sp"
-            android:textColor="#0288D1"
+            android:textColor="@color/colorSecondary"
             android:layout_gravity="end"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="24dp" />
 
+        <!-- Login Button -->
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:text="@string/button_login"
-            android:background="@drawable/button_green_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp"/>
+            android:background="@drawable/button_teal_background"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
 
-        <!-- Horizontal LinearLayout for Google and GitHub buttons -->
+        <!-- Social Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="28dp">
 
             <Button
                 android:id="@+id/btn_google_sign_in"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Sign in with Google"
-                android:background="@drawable/button_white_background"
+                android:text="Google"
                 android:drawableStart="@drawable/ic_google"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:paddingStart="12dp"
-                android:textColor="#212121"/>
+                android:textColor="@color/textPrimary"
+                android:background="@drawable/button_green_background" />
 
             <Button
                 android:id="@+id/btn_github_sign_in"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="@string/button_github_sign_in"
-                android:background="@drawable/button_white_background"
+                android:text="GitHub"
                 android:drawableStart="@drawable/ic_github"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:paddingStart="12dp"
-                android:textColor="#212121"/>
-
+                android:textColor="@color/textPrimary"
+                android:background="@drawable/button_red_background" />
         </LinearLayout>
 
+        <!-- Register Prompt -->
         <TextView
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_prompt"
             android:textSize="16sp"
-            android:textColor="#0288D1"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"/>
+            android:textColor="@color/colorSecondary"
+            android:layout_marginBottom="40dp" />
+
     </LinearLayout>
 </ScrollView>

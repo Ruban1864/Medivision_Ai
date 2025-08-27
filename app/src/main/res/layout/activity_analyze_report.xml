@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Analyze Report"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#00695C"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Select PDF -->
+    <Button
+        android:id="@+id/btnSelectPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select PDF"
+        android:background="@drawable/button_teal_background"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="14dp" />
+
+    <!-- Capture Image -->
+    <Button
+        android:id="@+id/btnCaptureImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Capture Image"
+        android:background="@drawable/button_green_background"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="14dp" />
+
+    <!-- Extract and Send -->
+    <Button
+        android:id="@+id/btnExtractText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Extract and Send"
+        android:background="@drawable/button_red_background"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="18dp" />
+
+    <!-- Scrollable extracted text area -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:padding="14dp"
+        android:scrollbars="vertical"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/txtExtractedText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#37474F"
+            android:textIsSelectable="true"
+            android:lineSpacingExtra="4dp" />
+    </ScrollView>
+
+</LinearLayout>

@@ -1,11 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- No Action Bar theme for specific activities -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!-- Main app theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00695C</item>
+        <item name="colorPrimaryVariant">#004D40</item>
+        <item name="colorSecondary">#26A69A</item>
+        <item name="android:colorBackground">#F4F8F7</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorError">#C62828</item>
+        <item name="android:textColorPrimary">#1A1A1A</item>
+        <item name="android:textColorSecondary">#5F6368</item>
+        <item name="materialButtonStyle">@style/Widget.App.MaterialButton</item>
+        <item name="cardViewStyle">@style/Widget.App.CardView</item>
+    </style>
+
+    <!-- Base Widget Style -->
+    <style name="Widget.App" parent="android:Widget">
+        <!-- Base properties can be added here if needed -->
+    </style>
+
+    <!-- Base Button Style -->
+    <style name="Widget.App.ButtonBase" parent="Widget.App">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="Widget.App.MaterialButton" parent="Widget.App.ButtonBase">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Button.Primary" parent="Widget.App.MaterialButton">
+        <item name="backgroundTint">#2E7D32</item>
+    </style>
+
+    <style name="Widget.Button.Secondary" parent="Widget.App.MaterialButton">
+        <item name="backgroundTint">#26A69A</item>
+    </style>
+
+    <style name="Widget.Button.Neutral" parent="Widget.App.MaterialButton">
+        <item name="backgroundTint">#B0BEC5</item>
+    </style>
+
+    <style name="Widget.Button.Error" parent="Widget.App.MaterialButton">
+        <item name="backgroundTint">#C62828</item>
+    </style>
+
+    <style name="Widget.Button.Accent" parent="Widget.App.MaterialButton">
+        <item name="backgroundTint">#80CBC4</item>
+    </style>
+
+    <!-- Card View Style -->
+    <style name="Widget.App.CardView" parent="Widget.App">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <!-- Card Container -->
+    <style name="Widget.App.CardContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@null</item> <!-- Removed drawable reference -->
+        <item name="android:elevation">4dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- Card Title -->
+    <style name="Widget.App.CardTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Card Subtitle -->
+    <style name="Widget.App.CardSubtitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <!-- Section Title -->
+    <style name="Widget.App.SectionTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Welcome Card -->
+    <style name="Widget.App.WelcomeCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@null</item> <!-- Removed drawable reference -->
+        <item name="android:elevation">4dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- Button Row -->
+    <style name="Widget.App.ButtonRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- Additional Styles -->
+    <style name="AppLargeProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.App.Body" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
 </resources>

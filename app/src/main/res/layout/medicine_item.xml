@@ -4,63 +4,73 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp"
-    android:background="#FFFFFF"
     android:layout_marginBottom="8dp"
-    android:elevation="2dp">
+    android:background="@drawable/rounded_card">
 
-    <!-- First Row: Medicine Name and Completion Status Button -->
+    <!-- Medicine Name -->
+    <TextView
+        android:id="@+id/tv_medicine_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medicine Name"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Dates Row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_marginBottom="4dp">
 
         <TextView
-            android:id="@+id/et_medicine_name"
+            android:id="@+id/tv_start_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="start"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#212121"/>
+            android:text="Start: 2025-08-20"
+            android:textSize="14sp"
+            android:textColor="@color/textSecondary" />
+
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="End: 2025-08-27"
+            android:textSize="14sp"
+            android:textColor="@color/textSecondary" />
+    </LinearLayout>
+
+    <!-- Due Time + Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tv_due_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due: 8:00 AM"
+            android:textSize="14sp"
+            android:textColor="@color/textSecondary"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btn_completion_status"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Incompleted"
-            android:textColor="#F44336"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"/>
-
+            android:layout_height="36dp"
+            android:paddingHorizontal="12dp"
+            android:text="Incomplete"
+            android:textSize="14sp"
+            android:background="@drawable/button_teal_background"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
-
-    <!-- Start Date -->
-    <TextView
-        android:id="@+id/btn_start_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textSize="16sp"
-        android:textColor="#757575"/>
-
-    <!-- End Date -->
-    <TextView
-        android:id="@+id/btn_end_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textSize="16sp"
-        android:textColor="#757575"/>
-
-    <!-- Due Time (Schedule) -->
-    <TextView
-        android:id="@+id/tv_due_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textSize="16sp"
-        android:textColor="#757575"/>
 
 </LinearLayout>
