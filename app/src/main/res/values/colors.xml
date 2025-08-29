@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <resources>
-            <!-- Brand Colors -->
-            <color name="colorPrimary">#2962FF</color> <!-- Vivid Indigo -->
-            <color name="colorPrimaryDark">#0D47A1</color> <!-- Deep Navy -->
-            <color name="colorSecondary">#00C853</color> <!-- Bright Emerald -->
-            <color name="colorAccent">#FF6D00</color> <!-- Vibrant Orange -->
+<resources>
+    <!-- Brand Colors -->
+    <color name="colorPrimary">#2962FF</color> <!-- Vivid Indigo -->
+    <color name="colorPrimaryDark">#0D47A1</color> <!-- Deep Navy -->
+    <color name="colorSecondary">#00C853</color> <!-- Bright Emerald -->
+    <color name="colorAccent">#FF6D00</color> <!-- Vibrant Orange -->
+    <color name="colorTeal">#009688</color>
+    <color name="colorTealDark">#00796B</color>
 
-            <!-- Backgrounds -->
-            <color name="colorBackground">#F8FAFC</color> <!-- Light Grayish Blue -->
-            <color name="colorSurface">#FFFFFF</color> <!-- Pure White -->
 
-            <!-- Text -->
-            <color name="textPrimary">#1A1A1A</color> <!-- Strong Black -->
-            <color name="textSecondary">#5F6368</color> <!-- Muted Gray -->
+    <!-- Backgrounds -->
+    <color name="colorBackground">#F8FAFC</color> <!-- Light Grayish Blue -->
+    <color name="colorSurface">#FFFFFF</color> <!-- Pure White -->
 
-            <!-- States -->
-            <color name="colorDisabled">#B0BEC5</color> <!-- Soft Gray -->
-            <color name="colorError">#D50000</color> <!-- Strong Red -->
-        </resources>
+    <!-- Text Colors -->
+    <color name="textPrimary">#1A1A1A</color> <!-- Strong Black -->
+    <color name="textSecondary">#5F6368</color> <!-- Muted Gray -->
+
+    <!-- States -->
+    <color name="colorDisabled">#B0BEC5</color> <!-- Soft Gray -->
+    <color name="colorError">#D50000</color> <!-- Strong Red -->
+
+    <!-- On-Colors (for Material3 contrast) -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- White text on Primary -->
+    <color name="colorOnSecondary">#FFFFFF</color> <!-- White text on Secondary -->
+    <color name="colorOnBackground">#1A1A1A</color> <!-- Dark text on light BG -->
+    <color name="colorOnSurface">#1A1A1A</color> <!-- Dark text on surface -->
+    <color name="colorOnError">#FFFFFF</color> <!-- White text on Error -->
+</resources>

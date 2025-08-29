@@ -35,7 +35,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     Button btnBack;
 
-    private final String n8nWebhookUrl = "https://ruban11.app.n8n.cloud/webhook-test/medvision-webhook";
+    private final String n8nWebhookUrl = "https://ruban112.app.n8n.cloud/webhook-test/medvision-webhook";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class SummaryActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> {
             Log.d(TAG, "Back button clicked");
-            startActivity(new Intent(this,UploadReportActivity.class));
+            startActivity(new Intent(this,AnalyzeReportActivity.class));
             finish();
         });
     }

@@ -5,17 +5,17 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7B1FA2">
+    android:background="@color/colorBackground">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/upload_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        app:title="Upload Report"
+        app:titleTextColor="@color/colorOnPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
 
     <!-- Report name input -->
     <EditText
@@ -25,9 +25,9 @@
         android:hint="Enter Report Name"
         android:layout_marginTop="16dp"
         android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:textColor="#000000"
-        android:textColorHint="#888888" />
+        android:background="@drawable/bg_edit_text"
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/textSecondary" />
 
     <!-- Progress bar (hidden by default) -->
     <ProgressBar
@@ -41,35 +41,29 @@
     <!-- Select PDF -->
     <Button
         android:id="@+id/btn_upload_pdf"
+        style="@style/Widget.App.Button.Primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SELECT PDF"
+        android:text="Select PDF"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#26A69A"
-        android:textColor="#FFFFFF"
-        android:padding="14dp" />
+        android:layout_marginBottom="12dp" />
 
     <!-- Capture Image -->
     <Button
         android:id="@+id/btn_capture_image"
+        style="@style/Widget.App.Button.Secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" CAPTURE IMAGE"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#1E88E5"
-        android:textColor="#FFFFFF"
-        android:padding="14dp" />
+        android:text="Capture Image"
+        android:layout_marginBottom="12dp" />
 
     <!-- Analyze Report -->
     <Button
         android:id="@+id/btn_analyze"
+        style="@style/Widget.App.Button.Success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ANALYZE REPORT"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#2E7D32"
-        android:textColor="#FFFFFF"
-        android:padding="14dp" />
+        android:text="Analyze Report"
+        android:layout_marginBottom="16dp" />
 
 </LinearLayout>

@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F0FAF8">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="@dimen/spacing_lg"
         android:gravity="center_horizontal">
 
         <!-- Title -->
@@ -19,8 +19,8 @@
             android:text="Add Medicine"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#00695C"
-            android:layout_marginBottom="30dp" />
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/spacing_xl" />
 
         <!-- Medicine Name -->
         <EditText
@@ -31,9 +31,9 @@
             android:inputType="textCapWords"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:background="@drawable/edit_text_teal_background"
-            android:textColorHint="#607D8B"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_input_field"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Dosage -->
         <EditText
@@ -44,9 +44,9 @@
             android:inputType="text"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:background="@drawable/edit_text_teal_background"
-            android:textColorHint="#607D8B"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_input_field"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Quantity -->
         <EditText
@@ -57,9 +57,9 @@
             android:inputType="number"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:background="@drawable/edit_text_teal_background"
-            android:textColorHint="#607D8B"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/bg_input_field"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
         <!-- Time -->
         <Button
@@ -67,17 +67,17 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Select Time"
-            android:background="@drawable/button_teal_background"
+            android:background="@drawable/bg_button_primary"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="@dimen/spacing_md" />
 
-        <!-- Start & End Dates (side by side) -->
+        <!-- Start & End Dates -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/spacing_md">
 
             <Button
                 android:id="@+id/btn_start_date"
@@ -85,9 +85,9 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Start Date"
-                android:background="@drawable/button_teal_background"
+                android:background="@drawable/bg_button_primary"
                 android:textColor="@android:color/white"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="@dimen/spacing_sm" />
 
             <Button
                 android:id="@+id/btn_end_date"
@@ -95,9 +95,9 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="End Date"
-                android:background="@drawable/button_teal_background"
+                android:background="@drawable/bg_button_primary"
                 android:textColor="@android:color/white"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="@dimen/spacing_sm" />
         </LinearLayout>
 
         <!-- Frequency Spinner -->
@@ -105,9 +105,9 @@
             android:id="@+id/sp_frequency"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/spinner_background"
+            android:background="@drawable/bg_spinner"
             android:padding="8dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
         <!-- Save Button -->
         <Button
@@ -115,9 +115,9 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Save"
-            android:background="@drawable/button_teal_background"
+            android:background="@drawable/bg_button_primary"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Back Button -->
         <Button
@@ -125,9 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Back"
-            android:background="@drawable/button_red_background"
+            android:background="@drawable/bg_button_error"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="@dimen/spacing_xl" />
 
     </LinearLayout>
 </ScrollView>

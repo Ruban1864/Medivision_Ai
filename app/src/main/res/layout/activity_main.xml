@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/spacing_md"
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
 
@@ -17,19 +17,19 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/textPrimary"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="@dimen/spacing_md" />
 
     <!-- Expiry Alerts -->
     <TextView
         android:id="@+id/cv_expiry_alerts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:background="@drawable/rounded_card"
+        android:padding="@dimen/spacing_md"
+        android:background="@drawable/bg_card_rounded"
         android:text="No upcoming expiries."
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="@dimen/spacing_md" />
 
     <!-- Medicine List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -39,14 +39,14 @@
         android:layout_weight="1"
         android:overScrollMode="never"
         android:scrollbars="vertical"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="@dimen/spacing_md" />
 
     <!-- Buttons Row 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="@dimen/spacing_sm">
 
         <Button
             android:id="@+id/btn_add_medicine"
@@ -55,8 +55,8 @@
             android:layout_weight="1"
             android:text="Add Medicine"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_teal_background"
-            android:layout_marginEnd="6dp" />
+            android:background="@drawable/bg_button_primary"
+            android:layout_marginEnd="@dimen/spacing_xs" />
 
         <Button
             android:id="@+id/btn_edit_medicine"
@@ -65,8 +65,8 @@
             android:layout_weight="1"
             android:text="Edit Medicine"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_green_background"
-            android:layout_marginStart="6dp" />
+            android:background="@drawable/bg_button_secondary"
+            android:layout_marginStart="@dimen/spacing_xs" />
     </LinearLayout>
 
     <!-- Buttons Row 2 -->
@@ -82,8 +82,8 @@
             android:layout_weight="1"
             android:text="Settings"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_teal_background"
-            android:layout_marginEnd="6dp" />
+            android:background="@drawable/bg_button_primary"
+            android:layout_marginEnd="@dimen/spacing_xs" />
 
         <Button
             android:id="@+id/btn_upload_report"
@@ -92,8 +92,8 @@
             android:layout_weight="1"
             android:text="Upload Report"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_green_background"
-            android:layout_marginHorizontal="6dp" />
+            android:background="@drawable/bg_button_secondary"
+            android:layout_marginHorizontal="@dimen/spacing_xs" />
 
         <Button
             android:id="@+id/btn_logout"
@@ -102,8 +102,8 @@
             android:layout_weight="1"
             android:text="Logout"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_red_background"
-            android:layout_marginStart="6dp" />
+            android:background="@drawable/bg_button_error"
+            android:layout_marginStart="@dimen/spacing_xs" />
     </LinearLayout>
 
 </LinearLayout>

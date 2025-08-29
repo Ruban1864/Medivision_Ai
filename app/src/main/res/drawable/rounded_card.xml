@@ -2,22 +2,21 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
+    <!-- Background color -->
+    <solid android:color="@color/colorSurface" />
+
     <!-- Rounded corners -->
     <corners android:radius="12dp" />
 
-    <!-- Background color -->
-    <solid android:color="@android:color/white" />
-
-    <!-- Subtle shadow-like effect using stroke -->
+    <!-- Optional shadow/border -->
     <stroke
         android:width="1dp"
-        android:color="#22000000" />
+        android:color="#DDDDDD" />
 
-    <!-- Optional padding inside card -->
+    <!-- Optional elevation effect (works on Lollipop+) -->
     <padding
         android:left="8dp"
         android:top="8dp"
         android:right="8dp"
-        android:bottom="8dp" />
-
+        android:bottom="8dp"/>
 </shape>

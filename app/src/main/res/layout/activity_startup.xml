@@ -5,7 +5,7 @@
     android:id="@+id/startup_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/colorBackground"
     tools:context=".StartupActivity">
 
     <!-- App Title -->
@@ -14,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MediTracker"
-        android:textSize="28sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textPrimary"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.25"/>
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
+        app:layout_constraintVertical_bias="0.3" />
 
     <!-- Progress Bar -->
     <ProgressBar
@@ -29,12 +29,13 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/app_title"
         app:layout_constraintBottom_toTopOf="@id/button_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:indeterminate="true" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <!-- Buttons Container (Initially Hidden) -->
     <LinearLayout
@@ -43,7 +44,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_md"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/progress_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,21 +54,19 @@
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Login"
-            android:backgroundTint="@color/purple_500"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp" />
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorSurface"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Register"
-            android:backgroundTint="@color/teal_700"
-            android:textColor="@android:color/white"
-            android:padding="12dp" />
+            android:backgroundTint="@color/colorSecondary"
+            android:textColor="@color/colorSurface" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F9FAFB">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="@dimen/spacing_lg">
 
         <!-- Title -->
         <TextView
@@ -18,102 +18,104 @@
             android:text="Edit Medicine"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#00695C"
+            android:textColor="@color/colorPrimary"
             android:layout_gravity="center"
-            android:layout_marginBottom="28dp" />
+            android:layout_marginBottom="@dimen/spacing_xl" />
 
         <!-- Medicine Name -->
         <EditText
             android:id="@+id/et_medicine_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Medicine Name"
-            android:inputType="text"
-            android:padding="14dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="18dp" />
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:background="@drawable/bg_edittext"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Dosage -->
         <EditText
             android:id="@+id/et_dosage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Dosage"
             android:inputType="text"
-            android:padding="14dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="18dp" />
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:background="@drawable/bg_edittext"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Quantity -->
         <EditText
             android:id="@+id/et_quantity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Quantity"
             android:inputType="number"
-            android:padding="14dp"
-            android:background="@drawable/edittext_background"
-            android:layout_marginBottom="18dp" />
+            android:paddingStart="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:background="@drawable/bg_edittext"
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
         <!-- Select Time -->
         <Button
             android:id="@+id/btn_time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Select Time"
-            android:background="@drawable/button_teal_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Start Date -->
         <Button
             android:id="@+id/btn_start_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Select Start Date"
-            android:background="@drawable/button_teal_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- End Date -->
         <Button
             android:id="@+id/btn_end_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Select End Date"
-            android:background="@drawable/button_teal_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
         <!-- Frequency Spinner -->
         <Spinner
             android:id="@+id/sp_frequency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:padding="12dp"
-            android:background="@drawable/spinner_background"
-            android:layout_marginBottom="24dp" />
+            android:layout_height="48dp"
+            android:padding="@dimen/spacing_sm"
+            android:background="@drawable/bg_spinner"
+            android:layout_marginBottom="@dimen/spacing_xl" />
 
         <!-- Save Button -->
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Save"
-            android:background="@drawable/button_green_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_button_secondary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/spacing_md" />
 
         <!-- Delete Button -->
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Delete"
-            android:background="@drawable/button_red_background"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/bg_button_error"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/spacing_lg" />
 
     </LinearLayout>
 </ScrollView>

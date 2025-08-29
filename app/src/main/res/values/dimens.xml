@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Spacing baseline (8dp grid) -->
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">16dp</dimen>
     <dimen name="spacing_lg">24dp</dimen>
     <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
 
     <!-- Corner radii -->
     <dimen name="radius_sm">6dp</dimen>
     <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">20dp</dimen>
 
     <!-- Elevation -->
     <dimen name="elevation_card">4dp</dimen>
     <dimen name="elevation_btn">2dp</dimen>
+    <dimen name="elevation_dialog">8dp</dimen>
 
-    <!-- Text sizes -->
+    <!-- Text sizes (Material scale) -->
+    <dimen name="text_h5">24sp</dimen>
     <dimen name="text_h6">20sp</dimen>
     <dimen name="text_body">16sp</dimen>
+    <dimen name="text_button">14sp</dimen>
     <dimen name="text_caption">12sp</dimen>
-
-
-
 
 </resources>

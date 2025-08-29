@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- declare id resources — keep them empty -->
     <item name="rv_medicine_reminders" type="id" />
-    <item name="tv_welcome" type="id">tv_welcom</item>
+    <item name="tv_welcome" type="id" />
 </resources>

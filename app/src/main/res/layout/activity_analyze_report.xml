@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="@dimen/spacing_lg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9FAFB">
+    android:background="@color/colorBackground">
 
     <!-- Title -->
     <TextView
@@ -13,47 +13,47 @@
         android:text="Analyze Report"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#00695C"
+        android:textColor="@color/colorPrimary"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="@dimen/spacing_xl" />
 
     <!-- Select PDF -->
     <Button
         android:id="@+id/btnSelectPdf"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Select PDF"
-        android:background="@drawable/button_teal_background"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="14dp" />
+        android:background="@drawable/bg_button_primary"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/spacing_md" />
 
     <!-- Capture Image -->
     <Button
         android:id="@+id/btnCaptureImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Capture Image"
-        android:background="@drawable/button_green_background"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="14dp" />
+        android:background="@drawable/bg_button_secondary"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/spacing_md" />
 
     <!-- Extract and Send -->
     <Button
         android:id="@+id/btnExtractText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Extract and Send"
-        android:background="@drawable/button_red_background"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="18dp" />
+        android:background="@drawable/bg_button_error"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/spacing_lg" />
 
     <!-- Scrollable extracted text area -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:padding="14dp"
+        android:background="@drawable/bg_card_surface"
+        android:padding="@dimen/spacing_md"
         android:scrollbars="vertical"
         android:elevation="2dp">
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="#37474F"
+            android:textColor="@color/textPrimary"
             android:textIsSelectable="true"
             android:lineSpacingExtra="4dp" />
     </ScrollView>

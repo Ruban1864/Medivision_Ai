@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string-array name="frequency_options">
-                <item>Daily</item>
-                <item>Weekly</item>
-                <item>Monthly</item>
-        </string-array>
+
+    <!-- Display labels for frequency options -->
+    <string-array name="frequency_options">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
 </resources>
