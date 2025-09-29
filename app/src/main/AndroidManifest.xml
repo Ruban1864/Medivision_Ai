@@ -61,6 +61,10 @@
             android:name=".UploadReportActivity"
             android:theme="@style/AppTheme"
             android:exported="false" />
+        <activity android:name=".SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+
     </application>
 
 </manifest>

@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnSettings.setOnClickListener(v -> {
             Log.d(TAG, "Settings button clicked");
-            Toast.makeText(this, "Settings feature coming soon!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         });
-
 
         btnLogout.setOnClickListener(v -> {
             Log.d(TAG, "Logout button clicked");

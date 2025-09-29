@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_xl" />
+
+        <!-- Full Name -->
+        <EditText
+            android:id="@+id/etFullName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Email (read-only) -->
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Email"
+            android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Age -->
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Age"
+            android:inputType="number"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Phone Number -->
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- New Password -->
+        <EditText
+            android:id="@+id/etNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:drawableEnd="@drawable/ic_eye_closed"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+        <!-- Confirm New Password -->
+        <EditText
+            android:id="@+id/etConfirmNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Confirm New Password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingEnd="@dimen/spacing_sm"
+            android:background="@drawable/bg_edit_text"
+            android:drawableEnd="@drawable/ic_eye_closed"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary"
+            android:layout_marginBottom="@dimen/spacing_lg" />
+
+        <!-- Update Button -->
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Update Profile"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@color/colorSurface"
+            android:layout_marginBottom="@dimen/spacing_md" />
+
+    </LinearLayout>
+</ScrollView>

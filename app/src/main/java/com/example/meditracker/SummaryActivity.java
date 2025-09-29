@@ -35,7 +35,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     Button btnBack;
 
-    private final String n8nWebhookUrl = "https://ruban112.app.n8n.cloud/webhook-test/medvision-webhook";
+    private final String n8nWebhookUrl = "https://ruban5555.app.n8n.cloud/webhook/medvision-webhook";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
