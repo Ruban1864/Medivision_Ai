@@ -113,3 +113,10 @@ public class SettingsActivity extends AppCompatActivity {
                         Toast.makeText(this, "Update failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }
+
+
+
+
+
+
+
