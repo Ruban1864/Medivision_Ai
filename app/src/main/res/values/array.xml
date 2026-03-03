@@ -8,4 +8,12 @@
         <item>Monthly</item>
     </string-array>
 
+    <string-array name="languages_array">
+        <item>English</item>
+        <item>Tamil</item>
+        <item>Hindi</item>
+        <item>Malayalam</item>
+        <item>Telugu</item>
+        <item>French</item>
+    </string-array>
 </resources>

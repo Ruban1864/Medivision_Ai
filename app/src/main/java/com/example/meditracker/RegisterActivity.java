@@ -69,6 +69,18 @@ public class RegisterActivity extends AppCompatActivity {
             String ageStr = etAge.getText().toString().trim();
             String phoneNumber = etPhoneNumber.getText().toString().trim();
 
+
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            Map<String, Object> user = new HashMap<>();
+            user.put("email", email);
+            user.put("role", "patient"); // default role
+
+            FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(uid)
+                    .set(user);
+
             // Validation
             if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
                     ageStr.isEmpty() || phoneNumber.isEmpty()) {

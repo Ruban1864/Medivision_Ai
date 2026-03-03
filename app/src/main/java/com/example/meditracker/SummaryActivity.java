@@ -35,9 +35,10 @@ public class SummaryActivity extends AppCompatActivity {
     private TextView tvSummaryContent;
     private String extractedText;
     private String reportUrl;
+    String selectedLanguage;
     private Button btnBack;
 
-    private final String n8nWebhookUrl = "https://rubanpass.app.n8n.cloud/webhook/medvision-webhook";
+    private final String n8nWebhookUrl = "https://ruban181818.app.n8n.cloud/webhook-test/medvision-webhook";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class SummaryActivity extends AppCompatActivity {
         tvSummaryContent = findViewById(R.id.tvSummaryContent);
         btnBack = findViewById(R.id.btn_back);
 
+        selectedLanguage = getIntent().getStringExtra("language");
         // Allow scrolling for summary
         tvSummaryContent.setMovementMethod(ScrollingMovementMethod.getInstance());
 
@@ -61,7 +63,7 @@ public class SummaryActivity extends AppCompatActivity {
         if (reportUrl != null && !reportUrl.isEmpty()) {
             extractedParams.put("Report URL", reportUrl);
         }
-
+        extractedParams.put("Language :",selectedLanguage);
         // Step 2: Display extracted parameters in table
         populateTable(extractedParams);
 
