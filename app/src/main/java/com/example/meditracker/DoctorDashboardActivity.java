@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         adapter = new DoctorReportAdapter(reportList, this);
         recyclerReports.setAdapter(adapter);
 
-        loadAssignedReports();
+        loadAssignedPatients();
 
         btnLogout.setOnClickListener(v -> {
 
@@ -70,33 +69,66 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void loadAssignedReports() {
+    private void loadAssignedPatients() {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        db.collectionGroup("reports")
-                .whereEqualTo("doctorId", doctorId)
+        db.collection("users")
+                .whereEqualTo("role", "patient")
+                .whereEqualTo("assignedDoctorId", doctorId) // FIXED FIELD
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 
-                    progressBar.setVisibility(View.GONE);
                     reportList.clear();
 
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if(queryDocumentSnapshots.isEmpty()){
+                        progressBar.setVisibility(View.GONE);
+                        txtEmpty.setVisibility(View.VISIBLE);
+                        return;
+                    }
+
+                    for(QueryDocumentSnapshot patientDoc : queryDocumentSnapshots){
+
+                        String patientId = patientDoc.getId();
+
+                        loadPatientReports(patientId);
+                    }
+                })
+                .addOnFailureListener(e -> {
+
+                    progressBar.setVisibility(View.GONE);
+
+                    Toast.makeText(
+                            this,
+                            "Failed loading patients",
+                            Toast.LENGTH_LONG
+                    ).show();
+                });
+    }
+
+    private void loadPatientReports(String patientId) {
+
+        db.collection("users")
+                .document(patientId)
+                .collection("reports")
+                .get()
+                .addOnSuccessListener(reportSnapshots -> {
+
+                    for (QueryDocumentSnapshot doc : reportSnapshots) {
 
                         String reportName = doc.getString("name");
                         String summary = doc.getString("summary");
                         String reportUrl = doc.getString("url");
 
-                        String patientId = doc.getReference()
-                                .getParent()
-                                .getParent()
-                                .getId();
-
                         Map<String,String> extractedData =
                                 (Map<String,String>) doc.get("extractedData");
 
-                        Long timestamp = doc.getLong("timestamp");
+                        com.google.firebase.Timestamp ts = doc.getTimestamp("timestamp");
+
+                        Long timestamp = 0L;
+                        if (ts != null) {
+                            timestamp = ts.getSeconds();
+                        }
 
                         reportList.add(
                                 new DoctorReportModel(
@@ -110,27 +142,16 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                         );
                     }
 
-                    // SORT LOCALLY IN JAVA
                     Collections.sort(reportList,
                             (a,b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
 
                     adapter.notifyDataSetChanged();
 
+                    progressBar.setVisibility(View.GONE);
+
                     txtEmpty.setVisibility(
                             reportList.isEmpty() ? View.VISIBLE : View.GONE
                     );
-                })
-                .addOnFailureListener(e -> {
-
-                    progressBar.setVisibility(View.GONE);
-
-                    e.printStackTrace();
-
-                    Toast.makeText(
-                            this,
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG
-                    ).show();
                 });
     }
 }

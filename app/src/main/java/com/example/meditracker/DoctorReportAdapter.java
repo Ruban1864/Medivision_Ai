@@ -46,7 +46,7 @@ public class DoctorReportAdapter
         holder.txtReportName.setText(model.getReportName());
 
         // Patient ID
-        holder.txtPatientId.setText("Patient ID: " + model.getPatientId());
+        holder.txtPatientId.setText("Patient : " + model.getPatientId());
 
         // Summary preview
         String summary = model.getSummary();
