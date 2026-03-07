@@ -61,6 +61,8 @@
         <activity android:name=".HistoryDetailActivity"/>
         <activity android:name=".PatientHistoryActivity"/>
         <activity android:name=".ChooseDoctorActivity"/>
+        <activity android:name=".PatientReportsActivity"/>
+
 
         <activity
             android:name=".UploadReportActivity"

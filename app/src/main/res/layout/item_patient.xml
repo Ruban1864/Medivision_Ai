@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/patient_card_bg"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <!-- Avatar -->
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="P"
+        android:textStyle="bold"
+        android:textColor="@color/colorOnPrimary"
+        android:textSize="18sp"
+        android:background="@drawable/patient_circle_bg"/>
+
+
+    <LinearLayout
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtPatientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Name"
+            android:textSize="18sp"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to view reports"
+            android:textSize="14sp"
+            android:textColor="@color/textSecondary"/>
+
+    </LinearLayout>
+
+</LinearLayout>

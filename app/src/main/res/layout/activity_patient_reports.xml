@@ -7,35 +7,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Top Header -->
+    <!-- Header -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:padding="20dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/txtPatientName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doctor Dashboard"
+            android:text="Patient Reports"
             android:textColor="@color/colorOnPrimary"
             android:textStyle="bold"
             android:textSize="22sp"/>
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textColor="@color/colorPrimary"
-            android:backgroundTint="@color/colorOnPrimary"/>
     </LinearLayout>
 
-
-    <!-- Progress -->
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -44,22 +34,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"/>
 
-
-    <!-- Empty State -->
-
-    <TextView
-        android:id="@+id/txtEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No patients assigned"
-        android:textColor="@color/textSecondary"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="30dp"
-        android:textSize="16sp"/>
-
-
-    <!-- Patient List -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerReports"

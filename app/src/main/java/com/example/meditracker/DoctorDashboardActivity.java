@@ -17,9 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class DoctorDashboardActivity extends AppCompatActivity {
 
@@ -30,8 +28,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String doctorId;
 
-    private List<DoctorReportModel> reportList;
-    private DoctorReportAdapter adapter;
+    private List<PatientModel> patientList;
+    private PatientAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +46,11 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         doctorId = FirebaseAuth.getInstance().getUid();
 
-        reportList = new ArrayList<>();
-        adapter = new DoctorReportAdapter(reportList, this);
+        patientList = new ArrayList<>();
+        adapter = new PatientAdapter(patientList, this);
         recyclerReports.setAdapter(adapter);
 
-        loadAssignedPatients();
+        loadPatients();
 
         btnLogout.setOnClickListener(v -> {
 
@@ -69,30 +67,32 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void loadAssignedPatients() {
+    private void loadPatients() {
 
         progressBar.setVisibility(View.VISIBLE);
 
         db.collection("users")
                 .whereEqualTo("role", "patient")
-                .whereEqualTo("assignedDoctorId", doctorId) // FIXED FIELD
+                .whereEqualTo("assignedDoctorId", doctorId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 
-                    reportList.clear();
+                    progressBar.setVisibility(View.GONE);
+                    patientList.clear();
 
-                    if(queryDocumentSnapshots.isEmpty()){
-                        progressBar.setVisibility(View.GONE);
-                        txtEmpty.setVisibility(View.VISIBLE);
-                        return;
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                        String patientId = doc.getId();
+                        String name = doc.getString("fullName");
+
+                        patientList.add(new PatientModel(patientId, name));
                     }
 
-                    for(QueryDocumentSnapshot patientDoc : queryDocumentSnapshots){
+                    adapter.notifyDataSetChanged();
 
-                        String patientId = patientDoc.getId();
-
-                        loadPatientReports(patientId);
-                    }
+                    txtEmpty.setVisibility(
+                            patientList.isEmpty() ? View.VISIBLE : View.GONE
+                    );
                 })
                 .addOnFailureListener(e -> {
 
@@ -100,58 +100,9 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
                     Toast.makeText(
                             this,
-                            "Failed loading patients",
+                            "Failed to load patients",
                             Toast.LENGTH_LONG
                     ).show();
-                });
-    }
-
-    private void loadPatientReports(String patientId) {
-
-        db.collection("users")
-                .document(patientId)
-                .collection("reports")
-                .get()
-                .addOnSuccessListener(reportSnapshots -> {
-
-                    for (QueryDocumentSnapshot doc : reportSnapshots) {
-
-                        String reportName = doc.getString("name");
-                        String summary = doc.getString("summary");
-                        String reportUrl = doc.getString("url");
-
-                        Map<String,String> extractedData =
-                                (Map<String,String>) doc.get("extractedData");
-
-                        com.google.firebase.Timestamp ts = doc.getTimestamp("timestamp");
-
-                        Long timestamp = 0L;
-                        if (ts != null) {
-                            timestamp = ts.getSeconds();
-                        }
-
-                        reportList.add(
-                                new DoctorReportModel(
-                                        reportName,
-                                        summary,
-                                        reportUrl,
-                                        patientId,
-                                        extractedData,
-                                        timestamp
-                                )
-                        );
-                    }
-
-                    Collections.sort(reportList,
-                            (a,b) -> Long.compare(b.getTimestamp(), a.getTimestamp()));
-
-                    adapter.notifyDataSetChanged();
-
-                    progressBar.setVisibility(View.GONE);
-
-                    txtEmpty.setVisibility(
-                            reportList.isEmpty() ? View.VISIBLE : View.GONE
-                    );
                 });
     }
 }
