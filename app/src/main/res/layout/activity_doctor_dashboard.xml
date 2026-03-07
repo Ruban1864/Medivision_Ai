@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Doctor Dashboard"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textColor="@color/colorOnPrimary"
+            android:backgroundTint="@color/colorPrimary"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No assigned reports"
+        android:textColor="@color/textSecondary"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerReports"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

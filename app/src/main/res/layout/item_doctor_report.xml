@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorSurface"
+    android:layout_marginBottom="10dp"
+    android:elevation="2dp">
+
+    <!-- Report Name -->
+    <TextView
+        android:id="@+id/txtReportName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Blood Test Report"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/textPrimary"/>
+
+    <!-- Patient ID -->
+    <TextView
+        android:id="@+id/txtPatientId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Patient ID: XXXXX"
+        android:textSize="12sp"
+        android:textColor="@color/colorSecondary"
+        android:layout_marginTop="2dp"/>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorDisabled"/>
+
+    <!-- AI Summary Preview -->
+    <TextView
+        android:id="@+id/txtSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AI generated summary preview will appear here..."
+        android:textSize="14sp"
+        android:textColor="@color/textSecondary"
+        android:maxLines="3"/>
+
+</LinearLayout>

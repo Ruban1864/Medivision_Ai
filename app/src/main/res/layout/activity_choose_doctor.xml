@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    android:padding="20dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Your Doctor"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a preferred doctor from the list below"
+        android:textSize="14sp"
+        android:textColor="@color/textSecondary"
+        android:layout_marginBottom="18dp" />
+
+    <!-- Doctor List Card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/colorSurface"
+        android:elevation="6dp"
+        android:padding="12dp">
+
+        <ListView
+            android:id="@+id/list_doctors"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="0.5dp"
+            android:background="@color/colorSurface"
+            android:scrollbars="vertical"/>
+    </LinearLayout>
+
+    <!-- Action Button -->
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="Cancel"
+        android:textColor="@color/colorOnPrimary"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/colorPrimary" />
+
+</LinearLayout>

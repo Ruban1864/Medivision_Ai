@@ -57,6 +57,11 @@
         <activity android:name=".EditMedicineActivity" android:exported="false" />
         <activity android:name=".AnalyzeReportActivity" android:exported="false" />
         <activity android:name=".SummaryActivity" android:exported="false" />
+        <activity android:name=".DoctorDashboardActivity"/>
+        <activity android:name=".HistoryDetailActivity"/>
+        <activity android:name=".PatientHistoryActivity"/>
+        <activity android:name=".ChooseDoctorActivity"/>
+
         <activity
             android:name=".UploadReportActivity"
             android:theme="@style/AppTheme"

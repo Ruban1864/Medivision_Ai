@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,10 +37,13 @@ public class SummaryActivity extends AppCompatActivity {
     private TableLayout tableExtractedData;
     private TextView tvSummaryContent;
     private String extractedText;
+    private String reportId;
     private String reportUrl;
     String selectedLanguage;
     private Button btnBack;
 
+    private FirebaseFirestore firestore;
+    private FirebaseAuth auth;
     private final String n8nWebhookUrl = "https://ruban181818.app.n8n.cloud/webhook-test/medvision-webhook";
 
     @Override
@@ -45,6 +51,8 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         // Initialize UI
         tableExtractedData = findViewById(R.id.tableExtractedData);
         tvSummaryContent = findViewById(R.id.tvSummaryContent);
@@ -57,6 +65,7 @@ public class SummaryActivity extends AppCompatActivity {
         // Get data from Intent
         extractedText = getIntent().getStringExtra("extracted_text");
         reportUrl = getIntent().getStringExtra("report_url");
+        reportId = getIntent().getStringExtra("report_id");
 
         // Step 1: Extract parameters
         Map<String, String> extractedParams = extractParameters(extractedText);
@@ -110,52 +119,104 @@ public class SummaryActivity extends AppCompatActivity {
 
     /** Sends extracted data to n8n webhook and displays summary */
     private void sendExtractedData(Map<String, String> extractedParams) {
+
         new Thread(() -> {
+
             try {
+
                 OkHttpClient client = new OkHttpClient.Builder()
-                        .callTimeout(3, TimeUnit.MINUTES)
-                        .connectTimeout(30, TimeUnit.SECONDS)
+                        .connectTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS)
                         .readTimeout(3, TimeUnit.MINUTES)
-                        .writeTimeout(3, TimeUnit.MINUTES)
+                        .callTimeout(3, TimeUnit.MINUTES)
                         .build();
 
-                JSONObject jsonObject = new JSONObject(extractedParams);
-                Log.d(TAG, "Sending data to n8n: " + jsonObject);
+                JSONObject jsonObject =
+                        new JSONObject(extractedParams);
 
                 RequestBody body = RequestBody.create(
                         MediaType.parse("application/json"),
-                        jsonObject.toString()
-                );
+                        jsonObject.toString());
 
                 Request request = new Request.Builder()
                         .url(n8nWebhookUrl)
                         .post(body)
                         .build();
 
-                Response response = client.newCall(request).execute();
-                String jsonResponse = response.body() != null ? response.body().string() : "";
+                Response response =
+                        client.newCall(request).execute();
 
-                Log.d(TAG, "n8n response: " + jsonResponse);
+                if (!response.isSuccessful()) {
+                    throw new Exception("HTTP Error: " + response.code());
+                }
+
+                String jsonResponse =
+                        response.body() != null ?
+                                response.body().string() : "";
 
                 runOnUiThread(() -> {
+
                     if (!jsonResponse.isEmpty()) {
-                        tvSummaryContent.setText(jsonResponse.replace("\\n", "\n"));
-                    } else {
-                        tvSummaryContent.setText("No summary received from server.");
+
+                        tvSummaryContent.setText(
+                                jsonResponse.replace("\\n", "\n"));
+
+                        saveSummaryToFirestore(
+                                jsonResponse,
+                                extractedParams);
                     }
                 });
 
             } catch (Exception e) {
-                Log.e(TAG, "Error sending data to n8n", e);
-                runOnUiThread(() -> Toast.makeText(
-                        this,
-                        "Failed to send data to n8n",
-                        Toast.LENGTH_SHORT
-                ).show());
+                Log.e("WEBHOOK_ERROR", "Webhook failed", e);
+                runOnUiThread(() ->
+                        Toast.makeText(this,
+                                "Webhook error",
+                                Toast.LENGTH_SHORT).show());
             }
         }).start();
     }
 
+
+    // 🔥 NEW METHOD
+    private void saveSummaryToFirestore(
+            String summary,
+            Map<String, String> extractedData) {
+
+        if (reportId == null || reportId.isEmpty()) {
+
+            Log.e("FIRESTORE_ERROR","Report ID is NULL. Cannot update database");
+            return;
+        }
+
+        String userId = auth.getCurrentUser().getUid();
+
+        Map<String,Object> updateMap = new HashMap<>();
+        updateMap.put("summary",summary);
+        updateMap.put("extractedData",extractedData);
+
+        Log.d("FIRESTORE_DEBUG","Updating report: "+reportId);
+
+        firestore.collection("users")
+                .document(userId)
+                .collection("reports")
+                .document(reportId)
+                .set(updateMap, com.google.firebase.firestore.SetOptions.merge())
+                .addOnSuccessListener(unused -> {
+
+                    Log.d("FIRESTORE_DEBUG","Summary stored successfully");
+
+                    Toast.makeText(this,
+                            "Summary saved",
+                            Toast.LENGTH_SHORT).show();
+
+                })
+                .addOnFailureListener(e -> {
+
+                    Log.e("FIRESTORE_DEBUG","Firestore update failed",e);
+
+                });
+    }
     /** Extracts medical parameters from text using improved regex */
     private Map<String, String> extractParameters(String text) {
         Map<String, String> params = new HashMap<>();

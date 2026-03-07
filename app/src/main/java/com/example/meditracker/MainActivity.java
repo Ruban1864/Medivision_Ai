@@ -24,221 +24,296 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_ADD_MEDICINE = 1;
     private static final int REQUEST_CODE_EDIT_MEDICINE = 2;
+
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+
     private TextView tvWelcome, tvExpiryAlerts;
     private RecyclerView rvMedicineReminders;
-    private Button btnAddMedicine, btnEditMedicine, btnSettings, btnLogout,btnUploadReport;
+
+    private TextView tvDoctorStatus;
+    private Button btnChooseDoctor;
+
+    private Button btnAddMedicine, btnEditMedicine,
+            btnSettings, btnLogout, btnUploadReport, btnViewHistory;
+
     private MedicineAdapter medicineAdapter;
     private List<Medicine> medicineList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate started");
+        setContentView(R.layout.activity_main);
 
-        // Set content view with theme error handling
-        try {
-            setContentView(R.layout.activity_main);
-            Log.d(TAG, "Layout set successfully");
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to set content view: " + e.getMessage(), e);
-            if (e instanceof IllegalStateException && e.getMessage().contains("Theme.AppCompat")) {
-                Log.e(TAG, "Theme error: Ensure AndroidManifest.xml or styles.xml uses a Theme.AppCompat theme");
-            }
-            Toast.makeText(this, "Error loading UI: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        // Initialize Firebase
-        try {
-            auth = FirebaseAuth.getInstance();
-            db = FirebaseFirestore.getInstance();
-            Log.d(TAG, "Firebase initialized");
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to initialize Firebase: " + e.getMessage(), e);
-            Toast.makeText(this, "Firebase error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-
-        // Check user authentication
         FirebaseUser user = auth.getCurrentUser();
+
         if (user == null) {
-            Log.d(TAG, "No user logged in, redirecting to LoginActivity");
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
-        Log.d(TAG, "User logged in: " + user.getUid());
 
-        // Initialize UI elements
-        try {
-            tvWelcome = findViewById(R.id.tv_welcome);
-            tvExpiryAlerts = findViewById(R.id.cv_expiry_alerts);
-            rvMedicineReminders = findViewById(R.id.rv_medicine_reminders);
-            btnAddMedicine = findViewById(R.id.btn_add_medicine);
-            btnEditMedicine = findViewById(R.id.btn_edit_medicine);
-            btnSettings = findViewById(R.id.btn_settings);
-            btnLogout = findViewById(R.id.btn_logout);
-            btnUploadReport = findViewById(R.id.btn_upload_report);
-            if (tvWelcome == null || tvExpiryAlerts == null || rvMedicineReminders == null ||
-                    btnAddMedicine == null || btnEditMedicine == null || btnSettings == null || btnLogout == null) {
-                throw new NullPointerException("One or more UI elements not found");
-            }
-            Log.d(TAG, "UI elements initialized");
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to initialize UI: " + e.getMessage(), e);
-            Toast.makeText(this, "UI error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+        // 🔐 RBAC VALIDATION
+        validateUserRole();
 
-        // Set welcome text
-        tvWelcome.setText("Welcome, " + (user.getEmail() != null ? user.getEmail() : "User"));
+        // Initialize UI
+        tvWelcome = findViewById(R.id.tv_welcome);
+        tvExpiryAlerts = findViewById(R.id.cv_expiry_alerts);
+        rvMedicineReminders = findViewById(R.id.rv_medicine_reminders);
 
-        // Initialize RecyclerView
+        btnAddMedicine = findViewById(R.id.btn_add_medicine);
+        btnEditMedicine = findViewById(R.id.btn_edit_medicine);
+        btnSettings = findViewById(R.id.btn_settings);
+        btnLogout = findViewById(R.id.btn_logout);
+        btnUploadReport = findViewById(R.id.btn_upload_report);
+        btnViewHistory = findViewById(R.id.btn_view_history);
+
+        tvDoctorStatus = findViewById(R.id.tv_doctor_name);
+        btnChooseDoctor = findViewById(R.id.btn_choose_doctor);
+
+        tvWelcome.setText("Welcome, " +
+                (user.getEmail() != null ? user.getEmail() : "User"));
+
+        // Setup RecyclerView
         medicineList = new ArrayList<>();
-        try {
-            medicineAdapter = new MedicineAdapter(medicineList, this::launchEditMedicineActivity);
-            if (medicineAdapter == null) {
-                throw new NullPointerException("MedicineAdapter creation failed");
-            }
-            rvMedicineReminders.setLayoutManager(new LinearLayoutManager(this));
-            rvMedicineReminders.setAdapter(medicineAdapter);
-            Log.d(TAG, "RecyclerView initialized successfully");
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to initialize RecyclerView: " + e.getMessage(), e);
-            Toast.makeText(this, "RecyclerView error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+        medicineAdapter = new MedicineAdapter(
+                medicineList,
+                this::launchEditMedicineActivity
+        );
 
-        // Load medicine data
+        rvMedicineReminders.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+        rvMedicineReminders.setAdapter(medicineAdapter);
+
+        // Load medicines
         loadMedicineData(user.getUid());
 
-        // Set button listeners
-        btnAddMedicine.setOnClickListener(v -> {
-            Log.d(TAG, "Add Medicine button clicked");
-            startActivityForResult(new Intent(this, AddMedicineActivity.class), REQUEST_CODE_ADD_MEDICINE);
-        });
+        // Button Listeners
+        btnAddMedicine.setOnClickListener(v ->
+                startActivityForResult(
+                        new Intent(this, AddMedicineActivity.class),
+                        REQUEST_CODE_ADD_MEDICINE));
 
-        btnEditMedicine.setOnClickListener(v -> {
-            Log.d(TAG, "Edit Medicine button clicked");
-            Toast.makeText(this, "Click a medicine in the list to edit", Toast.LENGTH_SHORT).show();
-        });
+        btnEditMedicine.setOnClickListener(v ->
+                Toast.makeText(this,
+                        "Click a medicine in the list to edit",
+                        Toast.LENGTH_SHORT).show());
 
-        btnSettings.setOnClickListener(v -> {
-            Log.d(TAG, "Settings button clicked");
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        });
+        btnSettings.setOnClickListener(v ->
+                startActivity(new Intent(this, SettingsActivity.class)));
 
         btnLogout.setOnClickListener(v -> {
-            Log.d(TAG, "Logout button clicked");
             auth.signOut();
-            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
-        btnUploadReport.setOnClickListener(v -> {
-            Log.d(TAG, "Upload Report button clicked");
-            try {
-                Intent intent = new Intent(MainActivity.this, UploadReportActivity.class);
-                startActivity(intent);
-            } catch (Exception e) {
-                Log.e(TAG, "Error starting UploadReportActivity: " + e.getMessage(), e);
-                Toast.makeText(this, "Error navigating to upload: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        btnUploadReport.setOnClickListener(v ->
+                startActivity(new Intent(this, UploadReportActivity.class)));
 
-        Log.d(TAG, "onCreate completed successfully");
+        btnViewHistory.setOnClickListener(v ->
+                startActivity(new Intent(this, PatientHistoryActivity.class)));
+
+
+        checkAssignedDoctor();
+        btnChooseDoctor.setOnClickListener(v ->
+                startActivity(new Intent(
+                        this,
+                        ChooseDoctorActivity.class)));
+
+    }
+
+
+    private void checkAssignedDoctor() {
+
+        String userId = auth.getCurrentUser().getUid();
+
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(doc -> {
+
+                    if (doc.exists()) {
+
+                        String assignedDoctorId =
+                                doc.getString("assignedDoctorId");
+
+                        if (assignedDoctorId == null) {
+                            tvDoctorStatus.setText(
+                                    "No doctor assigned.");
+                        } else {
+
+                            // Fetch doctor name
+                            db.collection("users")
+                                    .document(assignedDoctorId)
+                                    .get()
+                                    .addOnSuccessListener(doctorDoc -> {
+
+                                        String doctorName =
+                                                doctorDoc.getString("fullName");
+
+                                        tvDoctorStatus.setText(
+                                                "Assigned Doctor: "
+                                                        + doctorName);
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this,
+                                "Error loading doctor",
+                                Toast.LENGTH_SHORT).show());
+    }
+
+    // 🔐 ROLE CHECK
+    private void validateUserRole() {
+
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) return;
+
+        db.collection("users")
+                .document(user.getUid())
+                .get()
+                .addOnSuccessListener(document -> {
+
+                    if (document.exists()) {
+                        String role = document.getString("role");
+
+                        if ("doctor".equals(role)) {
+                            // Redirect doctor to doctor dashboard
+                            startActivity(new Intent(
+                                    MainActivity.this,
+                                    DoctorDashboardActivity.class));
+                            finish();
+                        }
+                    }
+                });
     }
 
     private void launchEditMedicineActivity(String medicineId) {
-        Log.d(TAG, "Launching EditMedicineActivity for medicineId: " + medicineId);
         Intent intent = new Intent(this, EditMedicineActivity.class);
         intent.putExtra("MEDICINE_ID", medicineId);
         startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICINE);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode,
+                                    int resultCode,
+                                    Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
-        if ((requestCode == REQUEST_CODE_ADD_MEDICINE || requestCode == REQUEST_CODE_EDIT_MEDICINE)
+
+        if ((requestCode == REQUEST_CODE_ADD_MEDICINE ||
+                requestCode == REQUEST_CODE_EDIT_MEDICINE)
                 && resultCode == RESULT_OK) {
+
             FirebaseUser user = auth.getCurrentUser();
             if (user != null) {
                 loadMedicineData(user.getUid());
-            } else {
-                Log.w(TAG, "User null in onActivityResult, redirecting to LoginActivity");
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
             }
         }
     }
 
     private void loadMedicineData(String userId) {
-        Log.d(TAG, "Loading medicine data for user: " + userId);
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-        db.collection("users").document(userId).collection("medicines")
+        String today = new SimpleDateFormat(
+                "yyyy-MM-dd",
+                Locale.getDefault()).format(new Date());
+
+        db.collection("users")
+                .document(userId)
+                .collection("medicines")
                 .get()
                 .addOnCompleteListener(task -> {
+
                     if (task.isSuccessful()) {
+
                         medicineList.clear();
-                        StringBuilder expiryAlerts = new StringBuilder();
+                        StringBuilder expiryAlerts =
+                                new StringBuilder();
+
                         boolean hasExpiryAlerts = false;
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String name = document.getString("name");
-                            String schedule = document.getString("schedule");
-                            String startDate = document.getString("startDate");
-                            String endDate = document.getString("endDate");
-                            String medicineId = document.getId();
+                        for (QueryDocumentSnapshot document :
+                                task.getResult()) {
 
-                            if (name == null || schedule == null || startDate == null || endDate == null) {
-                                Log.w(TAG, "Incomplete medicine data for ID: " + medicineId);
-                                continue;
-                            }
+                            String name = document.getString("name");
+                            String schedule =
+                                    document.getString("schedule");
+                            String startDate =
+                                    document.getString("startDate");
+                            String endDate =
+                                    document.getString("endDate");
+
+                            String medicineId =
+                                    document.getId();
+
+                            if (name == null ||
+                                    schedule == null ||
+                                    startDate == null ||
+                                    endDate == null) continue;
 
                             if (schedule.startsWith(today)) {
-                                boolean isCompleted = document.getBoolean("completed") != null ? document.getBoolean("completed") : false;
-                                medicineList.add(new Medicine(name, schedule, startDate, endDate, medicineId, isCompleted));
+
+                                boolean isCompleted =
+                                        document.getBoolean("completed")
+                                                != null &&
+                                                document.getBoolean("completed");
+
+                                medicineList.add(new Medicine(
+                                        name,
+                                        schedule,
+                                        startDate,
+                                        endDate,
+                                        medicineId,
+                                        isCompleted));
                             }
 
                             if (isExpiringSoon(endDate)) {
-                                expiryAlerts.append("- ").append(name).append(" (Expires: ").append(endDate).append(")\n");
+                                expiryAlerts.append("- ")
+                                        .append(name)
+                                        .append(" (Expires: ")
+                                        .append(endDate)
+                                        .append(")\n");
                                 hasExpiryAlerts = true;
                             }
                         }
 
                         medicineAdapter.notifyDataSetChanged();
-                        tvExpiryAlerts.setText(hasExpiryAlerts ? "Upcoming Expiry Alerts:\n" + expiryAlerts.toString() : "No upcoming expiries.");
-                        Log.d(TAG, "Medicine data loaded successfully, items: " + medicineList.size());
-                    } else {
-                        Log.e(TAG, "Failed to load medicine data: " + task.getException().getMessage(), task.getException());
-                        Toast.makeText(this, "Failed to load data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        tvExpiryAlerts.setText(
+                                hasExpiryAlerts ?
+                                        "Upcoming Expiry Alerts:\n" +
+                                                expiryAlerts :
+                                        "No upcoming expiries.");
                     }
                 });
     }
 
     private boolean isExpiringSoon(String expiryDate) {
+
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("yyyy-MM-dd",
+                            Locale.getDefault());
+
             Date expiry = sdf.parse(expiryDate);
             Date today = new Date();
+
             long diff = expiry.getTime() - today.getTime();
-            long daysDiff = diff / (1000 * 60 * 60 * 24);
+            long daysDiff =
+                    diff / (1000 * 60 * 60 * 24);
+
             return daysDiff <= 7 && daysDiff >= 0;
+
         } catch (Exception e) {
-            Log.w(TAG, "Error parsing expiry date: " + expiryDate + ", " + e.getMessage());
             return false;
         }
     }
@@ -246,12 +321,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart called");
+
         if (auth.getCurrentUser() == null) {
-            Log.w(TAG, "User logged out unexpectedly, redirecting to LoginActivity");
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAssignedDoctor(); // refresh when coming back
     }
 }
 
