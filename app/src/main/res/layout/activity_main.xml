@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/spacing_md"
+    android:padding="16dp"
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
 
@@ -17,7 +17,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/textPrimary"
-        android:layout_marginBottom="@dimen/spacing_md" />
+        android:layout_marginBottom="12dp"/>
 
     <!-- Doctor Info Card -->
     <LinearLayout
@@ -25,10 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_md"
+        android:padding="16dp"
         android:background="@drawable/bg_card_rounded"
-        android:layout_marginBottom="@dimen/spacing_md">
-
+        android:layout_marginBottom="12dp">
 
         <TextView
             android:id="@+id/tv_doctor_title"
@@ -38,7 +37,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="@color/textPrimary"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="6dp"/>
 
         <TextView
             android:id="@+id/tv_doctor_name"
@@ -48,16 +47,14 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/bg_button_primary"
-            android:layout_marginBottom="8dp"/>
+            android:padding="6dp"
+            android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/btn_choose_doctor"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Choose / Change Doctor"
-            android:textColor="@android:color/background_dark"
-            android:background="@drawable/bg_button_primary"/>
+            android:text="Choose / Change Doctor"/>
     </LinearLayout>
 
     <!-- Expiry Alerts -->
@@ -65,12 +62,12 @@
         android:id="@+id/cv_expiry_alerts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_md"
+        android:padding="16dp"
         android:background="@drawable/bg_card_rounded"
         android:text="No upcoming expiries."
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
-        android:layout_marginBottom="@dimen/spacing_md" />
+        android:layout_marginBottom="12dp"/>
 
     <!-- Medicine List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -78,16 +75,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:overScrollMode="never"
-        android:scrollbars="vertical"
-        android:layout_marginBottom="@dimen/spacing_md" />
+        android:layout_marginBottom="12dp"/>
 
-    <!-- Buttons Row 1 -->
+    <!-- Row 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/spacing_sm">
+        android:layout_marginBottom="8dp">
 
         <Button
             android:id="@+id/btn_add_medicine"
@@ -95,9 +90,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Add Medicine"
-            android:textColor="@android:color/white"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/bg_button_primary"
-            android:layout_marginEnd="@dimen/spacing_xs" />
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/btn_edit_medicine"
@@ -105,18 +100,17 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Edit Medicine"
-            android:textColor="@android:color/white"
+            android:layout_marginStart="6dp"
             android:background="@drawable/bg_button_secondary"
-            android:layout_marginStart="@dimen/spacing_xs" />
-
-
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
-    <!-- Buttons Row 2 -->
+    <!-- Row 2 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
 
         <Button
             android:id="@+id/btn_settings"
@@ -124,9 +118,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Settings"
-            android:textColor="@android:color/white"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/bg_button_primary"
-            android:layout_marginEnd="@dimen/spacing_xs" />
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/btn_upload_report"
@@ -134,9 +128,9 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Upload Report"
-            android:textColor="@android:color/white"
+            android:layout_marginHorizontal="6dp"
             android:background="@drawable/bg_button_secondary"
-            android:layout_marginHorizontal="@dimen/spacing_xs" />
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/btn_logout"
@@ -144,23 +138,18 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Logout"
-            android:textColor="@android:color/white"
+            android:layout_marginStart="6dp"
             android:background="@drawable/bg_button_error"
-            android:layout_marginStart="@dimen/spacing_xs" />
+            android:textColor="@android:color/white"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_view_history"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="View Report History"
-            android:textColor="@android:color/white"
-            android:background="@drawable/bg_button_secondary"
-            android:layout_marginTop="12dp"/>
-    </LinearLayout>
+    <!-- History Button -->
+    <Button
+        android:id="@+id/btn_view_history"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="View Report History"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_button_secondary"/>
 
 </LinearLayout>

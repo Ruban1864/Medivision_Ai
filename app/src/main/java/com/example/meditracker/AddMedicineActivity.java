@@ -195,11 +195,31 @@ public class AddMedicineActivity extends AppCompatActivity {
             alarmTime.add(Calendar.HOUR_OF_DAY, -1);
 
             // If alarm time is in the past, schedule for the next day (for daily frequency)
-            if (alarmTime.before(Calendar.getInstance()) && spFrequency.getSelectedItem().toString().equals("Daily")) {
-                alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+            Calendar now = Calendar.getInstance();
+
+            while (alarmTime.before(now)) {
+
+                String frequency = spFrequency.getSelectedItem().toString();
+
+                if (frequency.equals("Daily")) {
+                    alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+                }
+                else if (frequency.equals("Weekly")) {
+                    alarmTime.add(Calendar.WEEK_OF_YEAR, 1);
+                }
+                else if (frequency.equals("Monthly")) {
+                    alarmTime.add(Calendar.MONTH, 1);
+                }
+                else {
+                    break;
+                }
             }
 
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    alarmTime.getTimeInMillis(),
+                    pendingIntent
+            );
             Log.d(TAG, "Alarm set for: " + sdf.format(alarmTime.getTime()));
         } catch (Exception e) {
             Toast.makeText(this, "Error setting alarm: " + e.getMessage(), Toast.LENGTH_SHORT).show();

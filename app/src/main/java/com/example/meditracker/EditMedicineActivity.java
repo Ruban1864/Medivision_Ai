@@ -338,7 +338,11 @@ public class EditMedicineActivity extends AppCompatActivity {
                 Intent permissionIntent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                 startActivity(permissionIntent);
             } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+                alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        alarmTime.getTimeInMillis(),
+                        pendingIntent
+                );
                 Log.d(TAG, "Alarm updated for " + medicineName + " at " + sdf.format(alarmTime.getTime()));
             }
         } catch (Exception e) {

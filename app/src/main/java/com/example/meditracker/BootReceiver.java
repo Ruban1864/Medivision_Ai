@@ -93,7 +93,11 @@ public class BootReceiver extends BroadcastReceiver {
             }
 
             // Schedule the alarm
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    alarmTime.getTimeInMillis(),
+                    pendingIntent
+            );
             Log.d(TAG, "Rescheduled alarm for " + medicineName + " at " + sdf.format(alarmTime.getTime()));
         } catch (Exception e) {
             Log.e(TAG, "Error rescheduling alarm for " + medicineName + ": " + e.getMessage());
