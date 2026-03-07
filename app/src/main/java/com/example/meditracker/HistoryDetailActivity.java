@@ -36,7 +36,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         tvSummary.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         // Convert extracted string to table rows
-        if (extractedData != null) {
+        if (extractedData != null && !extractedData.isEmpty()) {
 
             extractedData = extractedData
                     .replace("{", "")
@@ -56,12 +56,16 @@ public class HistoryDetailActivity extends AppCompatActivity {
                     TableRow row = new TableRow(this);
 
                     TextView tvKey = new TextView(this);
-                    tvKey.setText(key);
+                    tvKey.setText(key.toUpperCase());
                     tvKey.setPadding(8,8,8,8);
+                    tvKey.setTextColor(getResources().getColor(R.color.textPrimary));
+                    tvKey.setTextSize(14);
 
                     TextView tvValue = new TextView(this);
                     tvValue.setText(value);
                     tvValue.setPadding(8,8,8,8);
+                    tvValue.setTextColor(getResources().getColor(R.color.textSecondary));
+                    tvValue.setTextSize(14);
 
                     row.addView(tvKey);
                     row.addView(tvValue);

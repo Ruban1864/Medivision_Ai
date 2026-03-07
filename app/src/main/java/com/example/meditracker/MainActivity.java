@@ -413,12 +413,19 @@ class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHolder> {
     }
 
     private void updateCompletionStatus(ViewHolder holder, boolean isCompleted) {
+
         if (isCompleted) {
-            holder.btnCompletionStatus.setText("Completed");
-            holder.btnCompletionStatus.setTextColor(0xFF4CAF50); // Green
+
+            holder.btnCompletionStatus.setText("Taken");
+            holder.btnCompletionStatus.setBackgroundResource(R.drawable.button_taken_background);
+            holder.btnCompletionStatus.setTextColor(android.graphics.Color.WHITE);
+
         } else {
-            holder.btnCompletionStatus.setText("Incompleted");
-            holder.btnCompletionStatus.setTextColor(0xFFF44336); // Red
+
+            holder.btnCompletionStatus.setText("Incomplete");
+            holder.btnCompletionStatus.setBackgroundResource(R.drawable.button_incomplete_background);
+            holder.btnCompletionStatus.setTextColor(android.graphics.Color.WHITE);
+
         }
     }
 

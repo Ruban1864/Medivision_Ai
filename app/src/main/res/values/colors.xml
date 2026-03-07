@@ -27,4 +27,13 @@
     <color name="colorOnBackground">#1A1A1A</color> <!-- Dark text on light BG -->
     <color name="colorOnSurface">#1A1A1A</color> <!-- Dark text on surface -->
     <color name="colorOnError">#FFFFFF</color> <!-- White text on Error -->
+
+    <color name="statusGreen">#4CAF50</color>
+    <color name="statusGreenDark">#388E3C</color>
+
+    <color name="statusOrange">#FF9800</color>
+    <color name="statusOrangeDark">#F57C00</color>
+
+    <color name="statusRed">#F44336</color>
+    <color name="statusRedDark">#D32F2F</color>
 </resources>

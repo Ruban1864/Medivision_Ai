@@ -1,155 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
 
-    <!-- Welcome -->
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome, User"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/textPrimary"
-        android:layout_marginBottom="12dp"/>
-
-    <!-- Doctor Info Card -->
     <LinearLayout
-        android:id="@+id/layout_doctor_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/bg_card_rounded"
-        android:layout_marginBottom="12dp">
+        android:padding="16dp">
 
+        <!-- Welcome -->
         <TextView
-            android:id="@+id/tv_doctor_title"
+            android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assigned Doctor"
+            android:text="Welcome, User"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:textSize="16sp"
             android:textColor="@color/textPrimary"
-            android:layout_marginBottom="6dp"/>
+            android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/tv_doctor_name"
-            android:layout_width="wrap_content"
+        <!-- Assigned Doctor Card -->
+        <LinearLayout
+            android:id="@+id/layout_doctor_section"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No doctor selected"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
-            android:padding="6dp"
-            android:layout_marginBottom="10dp"/>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_card_rounded"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp">
 
+            <TextView
+                android:id="@+id/tv_doctor_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assigned Doctor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                android:id="@+id/tv_doctor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No doctor selected"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_choose_doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Change Doctor"
+                android:background="@drawable/bg_button_secondary"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <!-- Expiry Alerts Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_rounded"
+            android:padding="16dp"
+            android:elevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/cv_expiry_alerts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No upcoming expiries."
+                android:textSize="14sp"
+                android:textColor="@color/textSecondary"/>
+        </LinearLayout>
+
+        <!-- Medicine List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_medicine_reminders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:nestedScrollingEnabled="false"/>
+
+        <!-- Primary Actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <Button
+                android:id="@+id/btn_add_medicine"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Add Medicine"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_primary"/>
+
+            <Button
+                android:id="@+id/btn_upload_report"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Upload Report"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_button_secondary"/>
+        </LinearLayout>
+
+        <!-- Secondary Actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <Button
+                android:id="@+id/btn_settings"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Settings"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_secondary"/>
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Logout"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_button_error"/>
+        </LinearLayout>
+
+        <!-- History -->
         <Button
-            android:id="@+id/btn_choose_doctor"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Choose / Change Doctor"/>
-    </LinearLayout>
+            android:id="@+id/btn_view_history"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="View Report History"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_button_secondary"/>
 
-    <!-- Expiry Alerts -->
-    <TextView
-        android:id="@+id/cv_expiry_alerts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@drawable/bg_card_rounded"
-        android:text="No upcoming expiries."
-        android:textColor="@color/textSecondary"
-        android:textSize="14sp"
-        android:layout_marginBottom="12dp"/>
-
-    <!-- Medicine List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_medicine_reminders"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="12dp"/>
-
-    <!-- Row 1 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/btn_add_medicine"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Add Medicine"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_button_primary"
-            android:textColor="@android:color/white"/>
-
+        <!-- Hidden edit button (logic preserved) -->
         <Button
             android:id="@+id/btn_edit_medicine"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Edit Medicine"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/bg_button_secondary"
-            android:textColor="@android:color/white"/>
+            android:layout_height="0dp"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
-    <!-- Row 2 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/btn_settings"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Settings"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_button_primary"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/btn_upload_report"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Upload Report"
-            android:layout_marginHorizontal="6dp"
-            android:background="@drawable/bg_button_secondary"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Logout"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/bg_button_error"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
-
-    <!-- History Button -->
-    <Button
-        android:id="@+id/btn_view_history"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="View Report History"
-        android:textColor="@android:color/white"
-        android:background="@drawable/bg_button_secondary"/>
-
-</LinearLayout>
+</ScrollView>
